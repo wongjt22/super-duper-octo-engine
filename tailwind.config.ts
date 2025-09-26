@@ -5,6 +5,12 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      spacing: {
+        '2': '0.5rem',   /* 8px */
+        '4': '1rem',     /* 16px */
+        '6': '1.5rem',   /* 24px */
+        '8': '2rem',     /* 32px */
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
