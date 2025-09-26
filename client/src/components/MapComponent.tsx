@@ -23,6 +23,23 @@ export function MapComponent({ onLandmarkSelect, searchQuery }: MapComponentProp
   const { data: landmarks = [], isLoading } = useQuery<Landmark[]>({
     queryKey: ["/api/landmarks", mapBounds],
     enabled: !!mapBounds,
+    queryFn: async () => {
+      if (!mapBounds) return [];
+      
+      const params = new URLSearchParams({
+        north: mapBounds.north.toString(),
+        south: mapBounds.south.toString(),
+        east: mapBounds.east.toString(),
+        west: mapBounds.west.toString(),
+      });
+      
+      const res = await fetch(`/api/landmarks?${params}`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch landmarks: ${res.statusText}`);
+      }
+      
+      return res.json();
+    },
   });
 
   // Initialize map

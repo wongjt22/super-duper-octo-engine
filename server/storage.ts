@@ -12,6 +12,7 @@ export interface IStorage {
   // Landmark operations
   getLandmarksByBounds(north: number, south: number, east: number, west: number): Promise<Landmark[]>;
   getLandmarkByWikipediaId(wikipediaPageId: string): Promise<Landmark | undefined>;
+  getLandmarkById(id: string): Promise<Landmark | undefined>;
   createLandmark(landmark: InsertLandmark): Promise<Landmark>;
   searchLandmarks(query: string): Promise<Landmark[]>;
 }
@@ -54,6 +55,10 @@ export class MemStorage implements IStorage {
     return Array.from(this.landmarks.values()).find(
       (landmark) => landmark.wikipedia_page_id === wikipediaPageId
     );
+  }
+
+  async getLandmarkById(id: string): Promise<Landmark | undefined> {
+    return this.landmarks.get(id);
   }
 
   async createLandmark(insertLandmark: InsertLandmark): Promise<Landmark> {
